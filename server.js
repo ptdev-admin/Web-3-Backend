@@ -78,6 +78,12 @@ router.route('/check-user').get((req, res) => {
     //dbConnect.collection("users").find({user: req.body.user}).toArray().then(userCol => res.send('not found') ? userCol.length === 0 : res.send('found'))
 });
 
+router.route('/users').delete((req, res) => {
+    //get the database
+    const dbConnect = dbo.getDb()
+	const result = await dbConnect.collection("users").deleteMany({user: null});
+})
+
 
 
 //api endpoint for team selected in head to head
