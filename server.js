@@ -35,14 +35,6 @@ router.route('/new-user').post((req, res) => {
         pswd: req.body.pswd
     };
 
-    res.setHeader('Access-Control-Allow-Credentials', true)
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
-    res.setHeader(
-        'Access-Control-Allow-Headers',
-        'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-    )
-
     dbConnect
         .collection("users")
         //insert a row into the table
@@ -73,13 +65,13 @@ router.route('/get-user').get((req, res) => {
 
 //api endpoint to get all users
 router.route('/users').get((req, res) => {
-    res.setHeader('Access-Control-Allow-Credentials', true)
+    /*res.setHeader('Access-Control-Allow-Credentials', true)
     res.setHeader('Access-Control-Allow-Origin', '*')
     res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
     res.setHeader(
         'Access-Control-Allow-Headers',
         'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-    )
+    )*/
     //get the database
     const dbConnect = dbo.getDb();
     dbConnect.collection("users").find({}).toArray().then(userCol => res.send(userCol))
