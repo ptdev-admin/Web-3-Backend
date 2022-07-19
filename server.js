@@ -11,14 +11,13 @@ const PORT = 3001;
 //get MongoDB driver connection
 const dbo = require('./db');
 
-
-
 //create an express router
 const router = express.Router();
 
 //middleware items
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
 
 
 //api endpoint to create a new user
@@ -43,6 +42,15 @@ router.route('/new-user').post((req, res) => {
             }
         });
 });
+
+//api endpoint to get users
+router.route('/users').get((req, res) => {
+    //get the database
+    const dbConnect = dbo.getDb();
+    res.send(dbConnect.collection("users"))
+});
+
+
 
 //api endpoint for team selected in head to head
 router.route('/user-teampicks').post((req, res) => {
