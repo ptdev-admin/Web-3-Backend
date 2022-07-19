@@ -81,7 +81,7 @@ router.route('/check-user').get((req, res) => {
 router.route('/users').delete((req, res) => {
     //get the database
     const dbConnect = dbo.getDb()
-	dbConnect.collection("users").deleteMany({user: null}).then(console.log('deleted'))
+	dbConnect.collection("users").deleteMany({user: null})
 })
 
 
