@@ -98,7 +98,8 @@ dbo.connectToServer((err) => {
 })
 
 //takes in a port and error function
-app.listen(process.env.PORT, err => {
+const port = process.env.PORT
+app.listen(port, err => {
     if(err) console.error(err)
-    console.log("Listening on PORT:", PORT)
+    console.log("Listening on PORT:", port)
 })
