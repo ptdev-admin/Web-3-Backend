@@ -61,9 +61,9 @@ router.route('/check-user').get((req, res) => {
     const dbConnect = dbo.getDb();
     //dbConnect.collection("users").find({user: req.body.user}).toArray().then(userCol => res.send('found') ? userCol.length > 0 : res.send('not found'))
     if (dbConnect.collection("users").find({user: req.body.user}).toArray().length > 0) {
-        res.send('found')
+        res.send(dbConnect.collection("users").find({user: req.body.user}).toArray().length)
     } else {
-        res.send('not found')
+        res.send(dbConnect.collection("users").find({user: req.body.user}).toArray().length)
     }
 
 });
