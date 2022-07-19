@@ -58,6 +58,13 @@ router.route('/users').get((req, res) => {
 
 //api endpoint to check if user exists
 router.route('/check-user').get((req, res) => {
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    )
     //get the database
     const dbConnect = dbo.getDb();
     dbConnect.collection("users").find({user: req.body.user}).toArray().then(userCol => res.send(typeof userCol[0]))
