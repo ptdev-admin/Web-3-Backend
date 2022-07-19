@@ -59,7 +59,7 @@ router.route('/users').get((req, res) => {
 router.route('/check-user').get((req, res) => {
     //get the database
     const dbConnect = dbo.getDb();
-    dbConnect.collection("users").find({user: req.body.user}).then(userCol => res.send(userCol))
+    dbConnect.collection("users").find({user: req.body.user}).toArray().then(userCol => res.send('not found') ? userCol.length === 0 : res.send('found'))
 });
 
 
