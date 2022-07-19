@@ -20,6 +20,10 @@ app.use(bodyParser.json());
 
 
 
+///// ENDPOINTS /////
+
+
+
 //api endpoint to create a new user
 router.route('/new-user').post((req, res) => {
     //get the database
@@ -54,7 +58,7 @@ router.route('/users').get((req, res) => {
 
 
 //api endpoint for team selected in head to head
-router.route('/user-teampicks').post((req, res) => {
+router.route('/new-teampicks').post((req, res) => {
     //get the database
     const dbConnect = dbo.getDb();
     //this is a "row" in our database
@@ -76,6 +80,17 @@ router.route('/user-teampicks').post((req, res) => {
             }
         });
 });
+
+//api endpoint to get picks for a certain user
+router.route('/user-teampicks').get((req, res) => {
+    //get the database
+    const dbConnect = dbo.getDb();
+    dbConnect.collection("teampicks").find({user: req.body.user}).then(userCol => res.send(userCol))
+});
+
+
+
+///// ***** /////
 
 
 
