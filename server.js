@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 
 //create the app and PORT
 const app = express();
-const PORT = 3001;
+//const PORT = 3001;
 
 //get MongoDB driver connection
 const dbo = require('./db');
