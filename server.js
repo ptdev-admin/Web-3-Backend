@@ -48,8 +48,7 @@ router.route('/users').get((req, res) => {
     //get the database
     const dbConnect = dbo.getDb();
     userCol = dbConnect.collection("users").find({}).toArray().then(userCol => console.log(userCol))
-    //res.send(dbConnect.collection("users").json())
-    res.send('test')
+    res.send(userCol)
 });
 
 
