@@ -47,8 +47,7 @@ router.route('/new-user').post((req, res) => {
 router.route('/users').get((req, res) => {
     //get the database
     const dbConnect = dbo.getDb();
-    //res.send(dbConnect.collection("users"))
-    res.send('user get check')
+    res.send(dbConnect.collection("users").json())
 });
 
 
