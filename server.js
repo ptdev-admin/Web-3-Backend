@@ -85,7 +85,7 @@ router.route('/new-teampicks').post((req, res) => {
 router.route('/user-teampicks').get((req, res) => {
     //get the database
     const dbConnect = dbo.getDb();
-    dbConnect.collection("teampicks").find({user: req.body.user}).then(userCol => res.send(userCol))
+    dbConnect.collection("teampicks").find({user: req.body.user}).toArray().then(userCol => res.send(userCol))
 });
 
 
