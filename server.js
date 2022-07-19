@@ -10,6 +10,7 @@ const app = express();
 
 //get MongoDB driver connection
 const dbo = require('./db');
+const { default: user } = require('../player-trader-website/constants/user');
 
 //create an express router
 const router = express.Router();
@@ -59,6 +60,7 @@ router.route('/users').get((req, res) => {
 router.route('/check-user').get((req, res) => {
     //get the database
     const dbConnect = dbo.getDb();
+    dbConnect.collection("users").find({user: req.body.user}).toArray().then(userCol => res.send(userCol))
     dbConnect.collection("users").find({user: req.body.user}).toArray().then(userCol => res.send('not found') ? userCol[0] : res.send('found'))
 });
 
