@@ -10,7 +10,7 @@ const app = express();
 
 //get MongoDB driver connection
 const dbo = require('./db');
-const { default: user } = require('../player-trader-website/constants/user');
+//const { default: user } = require('../player-trader-website/constants/user');
 
 //create an express router
 const router = express.Router();
