@@ -26,7 +26,8 @@ router.route('/new-user').post((req, res) => {
     const dbConnect = dbo.getDb();
     //this is a "row" in our database
     const userDocument = {
-        user: req.body.user
+        user: req.body.user,
+        pswd: req.body.pswd
     };
 
     dbConnect
