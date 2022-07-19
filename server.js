@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 
 
 
-//api endpoint to create a new user
+//api endpoint to create a new user with username and password
 router.route('/new-user').post((req, res) => {
     //get the database
     const dbConnect = dbo.getDb();
@@ -49,7 +49,7 @@ router.route('/new-user').post((req, res) => {
         });
 });
 
-//api endpoint to get user
+//api endpoint to get a user by username
 router.route('/get-user').get((req, res) => {
     res.setHeader('Access-Control-Allow-Credentials', true)
     res.setHeader('Access-Control-Allow-Origin', '*')
@@ -63,7 +63,21 @@ router.route('/get-user').get((req, res) => {
     dbConnect.collection("users").find({user: req.body.user}).toArray().then(userCol => res.send(userCol))
 });
 
-//api endpoint to check if user exists
+//api endpoint to get all users
+router.route('/get-user').get((req, res) => {
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    )
+    //get the database
+    const dbConnect = dbo.getDb();
+    dbConnect.collection("users").find({}).toArray().then(userCol => res.send(userCol))
+});
+
+//api endpoint to check if user exists by username
 router.route('/check-user').get((req, res) => {
     res.setHeader('Access-Control-Allow-Credentials', true)
     res.setHeader('Access-Control-Allow-Origin', '*')
@@ -78,6 +92,7 @@ router.route('/check-user').get((req, res) => {
     //dbConnect.collection("users").find({user: req.body.user}).toArray().then(userCol => res.send('not found') ? userCol.length === 0 : res.send('found'))
 });
 
+//api endpoint to delete null data
 router.route('/users').delete((req, res) => {
     res.setHeader('Access-Control-Allow-Credentials', true)
     res.setHeader('Access-Control-Allow-Origin', '*')
@@ -119,6 +134,13 @@ router.route('/new-teampicks').post((req, res) => {
 
 //api endpoint to get picks for a certain user
 router.route('/user-teampicks').get((req, res) => {
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    )
     //get the database
     const dbConnect = dbo.getDb();
     dbConnect.collection("teampicks").find({user: req.body.user}).toArray().then(userCol => res.send(userCol))
