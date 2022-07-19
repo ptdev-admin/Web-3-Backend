@@ -55,6 +55,14 @@ router.route('/users').get((req, res) => {
     dbConnect.collection("users").find({}).toArray().then(userCol => res.send(userCol))
 });
 
+//api endpoint to check if user exists
+router.route('/check-user').get((req, res) => {
+    //get the database
+    const dbConnect = dbo.getDb();
+    console.log(dbConnect.collection("users").find({user: req.body.user}))
+    //.toArray().then(userCol => res.send(userCol))
+});
+
 
 
 //api endpoint for team selected in head to head
