@@ -1,32 +1,22 @@
-//require statements
-require('dotenv').config({path: './config.env'});
-const express = require('express');
-const { Db } = require('mongodb');
-const bodyParser = require('body-parser');
+require('dotenv').config({path: './config.env'})
+const express = require('express')
+const cors = require('cors')
+const { Db } = require('mongodb')
+const bodyParser = require('body-parser')
 
-//create the app and PORT
-const app = express();
-//const PORT = 3001;
+const app = express()
+const dbo = require('./db')
+const router = express.Router()
 
-//get MongoDB driver connection
-const dbo = require('./db');
-//const { default: user } = require('../player-trader-website/constants/user');
-
-//create an express router
-const router = express.Router();
-
-//middleware items
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
-
-
-
-///// ENDPOINTS /////
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
+router.use(cors())
+router.options('*', cors())
 
 
 
 //api endpoint to create a new user with username and password
-router.route('/new-user').post((req, res) => {
+router.route('/users').post((req, res) => {
     //get the database
     const dbConnect = dbo.getDb();
     //this is a "row" in our database
@@ -49,29 +39,16 @@ router.route('/new-user').post((req, res) => {
         });
 });
 
-//api endpoint to get a user by username
-router.route('/get-user').get((req, res) => {
-    const dbConnect = dbo.getDb();
-    dbConnect.collection("users").find({user: req.body.user}).toArray().then(userCol => res.send(userCol))
-});
-
 //api endpoint to get all users
 router.route('/users').get((req, res) => {
     const dbConnect = dbo.getDb();
     dbConnect.collection("users").find({}).toArray().then(userCol => res.send(userCol))
 });
 
-//api endpoint to check if user exists by username
-router.route('/check-user').get((req, res) => {
-    const dbConnect = dbo.getDb();
-    dbConnect.collection("users").find({user: req.body.user}).toArray().then(userCol => res.send(typeof userCol[0]))
-    //dbConnect.collection("users").find({user: req.body.user}).toArray().then(userCol => res.send('not found') ? userCol.length === 0 : res.send('found'))
-});
-
 //api endpoint to delete null data
 router.route('/users').delete((req, res) => {
     const dbConnect = dbo.getDb()
-	dbConnect.collection("users").deleteMany({user: null})
+	dbConnect.collection("users").deleteMany({user: eric})
 })
 
 
@@ -108,11 +85,6 @@ router.route('/user-teampicks').get((req, res) => {
 
 
 
-///// ***** /////
-
-
-
-//tell the app to use the router
 app.use(router);
 
 //global error handling
