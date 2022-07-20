@@ -31,7 +31,7 @@ router.route('/users').post((req, res) => {
             res.status(400).send("Error inserting user")
         } else {
             console.log(`Added a new user: ${userDocument.user}`)
-            res.status(204).send()
+            res.status(204).send("new user added")
         }
     });   
 });
