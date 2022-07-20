@@ -30,6 +30,7 @@ router.route('/users').post((req, res) => {
             if (err) {
                 res.status(400).send("Error inserting user")
             } else {
+                res.send(dbConnect.collection("users").find({user: req.body.user}))
                 console.log(`Added a new user: ${userDocument.user}`)
                 res.status(204).send()
             }
