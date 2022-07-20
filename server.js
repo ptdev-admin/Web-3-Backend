@@ -22,21 +22,7 @@ router.route('/users').post((req, res) => {
         user: req.body.user,
         pswd: req.body.pswd
     }
-    /*if (dbConnect.collection("users").find({user: req.body.user})) {
-        //res.status(400).send("User already exists")
-        res.send(dbConnect.collection("users").find({user: req.body.user}))
-    } else {
-        dbConnect.collection("users").insertOne(userDocument, (err, result) => {
-            if (err) {
-                res.status(400).send("Error inserting user")
-            } else {
-                res.send(dbConnect.collection("users").find({user: req.body.user}))
-                console.log(`Added a new user: ${userDocument.user}`)
-                res.status(204).send()
-            }
-        });
-    }*/
-    dbConnect.collection("users").insertOne(userDocument, {upsert: true}, (err, result) => {
+    dbConnect.collection("users").update({user: req.body.user}, {$setOnInsert: userDocument}, {upsert: true}, (err, result) => {
         if (err) {
             res.status(400).send("Error inserting user")
         } else {
@@ -44,7 +30,7 @@ router.route('/users').post((req, res) => {
             console.log(`Added a new user: ${userDocument.user}`)
             res.status(204).send()
         }
-    });
+    });   
 });
 
 //api endpoint to get all users
