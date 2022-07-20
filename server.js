@@ -18,11 +18,11 @@ router.options('*', cors())
 //api endpoint to create a new user with username and password
 router.route('/users').post((req, res) => {
     const dbConnect = dbo.getDb();
-    const userDocument = {$set: {
+    const userDocument = {$setOnInsert: {
         user: req.body.user,
         pswd: req.body.pswd
     }}
-    dbConnect.collection("users").updateOne({user: req.body.user}, {user: req.body.user}, {upsert: false}, (err, result) => {
+    dbConnect.collection("users").updateOne({user: req.body.user}, {user: req.body.user}, {upsert: true}, (err, result) => {
         if (err) {
             res.status(400).send("Error inserting user")
         } else {
