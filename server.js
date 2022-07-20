@@ -48,7 +48,7 @@ router.route('/users').delete((req, res) => {
 
 
 //api endpoint for team selected in head to head
-router.route('/teampicks').post((req, res) => {
+router.route('/teampicks').put((req, res) => {
     const dbConnect = dbo.getDb();
     const picks = {
         user: req.body.user,
@@ -67,8 +67,7 @@ router.route('/teampicks').post((req, res) => {
 //api endpoint to get all team picks
 router.route('/teampicks').get((req, res) => {
     const dbConnect = dbo.getDb();
-    dbConnect.collection("teampicks").find({}).toArray().then(userCol => res.send(userCol))
-
+    dbConnect.collection("teampicks").find({}).toArray().then(pickCol => res.send(pickCol))
 });
 
 //api endpoint to delete all pick data
