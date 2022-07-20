@@ -48,7 +48,7 @@ router.route('/users').get((req, res) => {
 //api endpoint to delete null data
 router.route('/users').delete((req, res) => {
     const dbConnect = dbo.getDb()
-	dbConnect.collection("users").deleteMany({user: req.body.user})
+	dbConnect.collection("users").remove({})
 })
 
 
