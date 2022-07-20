@@ -54,7 +54,7 @@ router.route('/teampicks').put((req, res) => {
         user: req.body.user,
         teampicks: req.body.teampicks
     };
-    dbConnect.collection("teampicks").insertOne(picks, (err, result) => {
+    dbConnect.collection("teampicks").updateOne({user: req.body.user}, picks, (err, result) => {
         if (err) {
             res.status(400).send("Error retrieving user selection");
         } else {
