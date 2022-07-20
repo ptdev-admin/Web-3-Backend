@@ -17,26 +17,19 @@ router.options('*', cors())
 
 //api endpoint to create a new user with username and password
 router.route('/users').post((req, res) => {
-    //get the database
     const dbConnect = dbo.getDb();
-    //this is a "row" in our database
     const userDocument = {
         user: req.body.user,
         pswd: req.body.pswd
     };
-
-    dbConnect
-        .collection("users")
-        //insert a row into the table
-        .insertOne(userDocument, (err, result) => {
-            if (err) {
-                res.status(400).send("Error inserting user");
-            } else {
-                console.log(result);
-                console.log(`Added a new user: ${userDocument.user}`)
-                res.status(204).send();
-            }
-        });
+    dbConnect.collection("users").insertOne(userDocument, (err, result) => {
+        if (err) {
+            res.status(400).send("Error inserting user");
+        } else {
+            console.log(`Added a new user: ${userDocument.user}`)
+            res.status(204).send();
+        }
+    });
 });
 
 //api endpoint to get all users
@@ -45,7 +38,7 @@ router.route('/users').get((req, res) => {
     dbConnect.collection("users").find({}).toArray().then(userCol => res.send(userCol))
 });
 
-//api endpoint to delete null data
+//api endpoint to delete all user data
 router.route('/users').delete((req, res) => {
     const dbConnect = dbo.getDb()
 	dbConnect.collection("users").remove({})
@@ -55,34 +48,35 @@ router.route('/users').delete((req, res) => {
 
 
 //api endpoint for team selected in head to head
-router.route('/new-teampicks').post((req, res) => {
-    //get the database
+router.route('/teampicks').post((req, res) => {
     const dbConnect = dbo.getDb();
-    //this is a "row" in our database
     const picks = {
         user: req.body.user,
         teampicks: req.body.teampicks
     };
-
-    dbConnect
-        .collection("teampicks")
-        //insert a row into the table
-        .insertOne(picks, (err, result) => {
-            if (err) {
-                res.status(400).send("Error retrieving user selection");
-            } else {
-                console.log(result);
-                console.log(`${picks.user} selected ${picks.teampicks}`)
-                res.status(204).send();
-            }
-        });
+    dbConnect.collection("teampicks").insertOne(picks, (err, result) => {
+        if (err) {
+            res.status(400).send("Error retrieving user selection");
+        } else {
+            console.log(`${picks.user} selected ${picks.teampicks}`)
+            res.status(204).send();
+        }
+    });
 });
 
-//api endpoint to get picks for a certain user
-router.route('/user-teampicks').get((req, res) => {
+//api endpoint to get all team picks
+router.route('/teampicks').get((req, res) => {
     const dbConnect = dbo.getDb();
-    dbConnect.collection("teampicks").find({user: req.body.user}).toArray().then(userCol => res.send(userCol))
+    dbConnect.collection("teampicks").find({}).toArray().then(userCol => res.send(userCol))
+
 });
+
+//api endpoint to delete all pick data
+router.route('/teampicks').delete((req, res) => {
+    const dbConnect = dbo.getDb()
+	dbConnect.collection("teampicks").remove({})
+    res.send('deleted all')
+})
 
 
 
