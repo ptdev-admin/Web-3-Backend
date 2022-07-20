@@ -49,6 +49,7 @@ router.route('/users').get((req, res) => {
 router.route('/users').delete((req, res) => {
     const dbConnect = dbo.getDb()
 	dbConnect.collection("users").remove({})
+    res.send('deleted all')
 })
 
 
