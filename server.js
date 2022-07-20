@@ -24,6 +24,7 @@ router.route('/users').post((req, res) => {
     }
     if (dbConnect.collection("users").findOne({user: req.body.user})) {
         res.status(400).send("User already exists")
+        res.send(dbConnect.collection("users").findOne({user: req.body.user}))
     } else {
         dbConnect.collection("users").insertOne(userDocument, (err, result) => {
             if (err) {
