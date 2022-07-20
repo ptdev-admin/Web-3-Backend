@@ -22,7 +22,7 @@ router.route('/users').post((req, res) => {
         user: req.body.user,
         pswd: req.body.pswd
     }}
-    dbConnect.collection("users").updateOne({user: req.body.user}, userDocument, {upsert: true}, (err, result) => {
+    dbConnect.collection("users").updateOne({user: req.body.user}, {user: req.body.user}, {upsert: false}, (err, result) => {
         if (err) {
             res.status(400).send("Error inserting user")
         } else {
