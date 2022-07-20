@@ -20,7 +20,11 @@ router.route('/users').post((req, res) => {
     const dbConnect = dbo.getDb();
     const userDocument = {$setOnInsert: {
         user: req.body.user,
-        pswd: req.body.pswd
+        name: req.body.name,
+        pswd: req.body.pswd,
+        email: req.body.email,
+        country: req.body.country,
+        referral: req.body.referral
     }}
     dbConnect.collection("users").updateOne({user: req.body.user}, userDocument, {upsert: true}, (err, result) => {
         if (err) {
