@@ -62,10 +62,9 @@ router.route('/teampicks').put((req, res) => {
     }
     dbConnect.collection("teampicks").updateOne({user: req.body.user}, updatePicks, {upsert: true}, (err, result) => {
         if (err) {
-            res.status(400).send("Error retrieving user selection");
+            res.send("Error retrieving user selection");
         } else {
-            console.log(`${picks.user} selected ${picks.teampicks}`)
-            res.status(204).send("user selection added");
+            res.send("User selection added");
         }
     })
 })
