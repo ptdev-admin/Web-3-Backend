@@ -53,16 +53,22 @@ router.route('/teampicks').put((req, res) => {
     const picks = {
         user: req.body.user,
         teampicks: req.body.teampicks
-    };
-    dbConnect.collection("teampicks").updateOne({user: req.body.user}, picks, (err, result) => {
+    }
+    const updatePicks = {
+        $set: {
+            user: req.body.user,
+            teampicks: req.body.teampicks
+        },
+    }
+    dbConnect.collection("teampicks").updateOne({user: req.body.user}, updatePicks, {upsert: true}, (err, result) => {
         if (err) {
             res.status(400).send("Error retrieving user selection");
         } else {
             console.log(`${picks.user} selected ${picks.teampicks}`)
             res.status(204).send();
         }
-    });
-});
+    })
+})
 
 //api endpoint to get all team picks
 router.route('/teampicks').get((req, res) => {
