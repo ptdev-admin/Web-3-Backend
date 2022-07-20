@@ -65,7 +65,7 @@ router.route('/teampicks').put((req, res) => {
             res.status(400).send("Error retrieving user selection");
         } else {
             console.log(`${picks.user} selected ${picks.teampicks}`)
-            res.status(204).send();
+            res.status(204).send("user selection added");
         }
     })
 })
