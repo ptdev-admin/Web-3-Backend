@@ -22,7 +22,7 @@ router.route('/users').post((req, res) => {
         user: req.body.user,
         pswd: req.body.pswd
     }
-    if (dbConnect.collection("users").findOne({user: req.body.user})) {
+    if (dbConnect.collection("users").findOne({user: req.body.user}).user) {
         //res.status(400).send("User already exists")
         res.send(dbConnect.collection("users").findOne({user: req.body.user}))
     } else {
@@ -55,10 +55,6 @@ router.route('/users').delete((req, res) => {
 //api endpoint for team selected in head to head
 router.route('/teampicks').put((req, res) => {
     const dbConnect = dbo.getDb();
-    const picks = {
-        user: req.body.user,
-        teampicks: req.body.teampicks
-    }
     const updatePicks = {
         $set: {
             user: req.body.user,
