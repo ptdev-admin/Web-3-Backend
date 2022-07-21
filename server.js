@@ -47,13 +47,14 @@ router.route('/users').put((req, res) => {
             points: req.body.points
         }
     }
-    dbConnect.collection("teampicks").updateOne({user: req.body.user}, updatePicks, {upsert: true}, (err, result) => {
+    res.send(dbConnect.collection("teampicks").updateOne({user: req.body.user}, updatePicks, {upsert: true}))
+        /*dbConnect.collection("teampicks").updateOne({user: req.body.user}, updatePicks, {upsert: true}, (err, result) => {
         if (err) {
             res.send("Error updating user pick points");
         } else {
             res.send("User pick points added: " + req.body.points);
         }
-    })
+    })*/
 })
 
 //api endpoint to get all users
