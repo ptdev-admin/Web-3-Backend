@@ -24,6 +24,7 @@ router.route('/users').post((req, res) => {
         pswd: req.body.pswd,
         email: req.body.email,
         country: req.body.country,
+        state: req.body.country,
         referral: req.body.referral
     }}
     dbConnect.collection("users").updateOne({user: req.body.user}, userDocument, {upsert: true}, (err, result) => {
