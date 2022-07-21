@@ -56,7 +56,7 @@ router.route('/users').put((req, res) => {
     })*/
     const dbConnect = dbo.getDb();
     const updatePicks = {
-        $set: {
+        $inc: {
             user: req.body.user,
             points: req.body.points
         },
