@@ -47,11 +47,11 @@ router.route('/users').put((req, res) => {
             points: req.body.points
         }
     }
-    dbConnect.collection("teampicks").updateOne({user: req.body.user}, updatePicks, (err, result) => {
+    dbConnect.collection("teampicks").updateOne({user: req.body.user}, updatePicks, {upsert: true}, (err, result) => {
         if (err) {
             res.send("Error updating user pick points");
         } else {
-            res.send("Added points: " + req.body.points);
+            res.send("User pick points added: " + req.body.points);
         }
     })
 })
