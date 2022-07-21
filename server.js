@@ -43,11 +43,11 @@ router.route('/users').post((req, res) => {
 router.route('/users').put((req, res) => {
     const dbConnect = dbo.getDb()
     const incPoints = {
-        $add: {
+        $inc: {
             points: req.body.points
         }
     }
-    dbConnect.collection("teampicks").updateOne({user: req.body.user}, incPoints, (err, result) => {
+    dbConnect.collection("users").update({user: req.body.user}, incPoints, (err, result) => {
         if (err) {
             res.send(err);
         } else {
