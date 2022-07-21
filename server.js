@@ -42,7 +42,7 @@ router.route('/users').post((req, res) => {
 //api endpoint to update a user's points based on their picks
 router.route('/users').put((req, res) => {
     const dbConnect = dbo.getDb()
-    const key = user
+    const key = "user"
     const val = req.body.user
     const filt = {}
     filt[key] = val
