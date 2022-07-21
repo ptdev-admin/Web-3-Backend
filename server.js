@@ -42,17 +42,16 @@ router.route('/users').post((req, res) => {
 //api endpoint to update a user's points based on their picks
 router.route('/users').put((req, res) => {
     const dbConnect = dbo.getDb()
-    const curPoints = dbConnect.collection("teampicks").findOne({user: req.body.user}).lean().points
     const updatePicks = {
-        $set: {
-            points: curPoints + req.body.points
+        $inc: {
+            points: req.body.points
         }
     }
-    dbConnect.collection("teampicks").updateOne({user: req.body.user}, updatePicks, {upsert: true}, (err, result) => {
+    dbConnect.collection("teampicks").updateOne({user: req.body.user}, updatePicks, (err, result) => {
         if (err) {
             res.send("Error updating user pick points");
         } else {
-            res.send("User pick points updated " + curPoints + ' + ' + req.body.points);
+            res.send("Added points: " + req.body.points);
         }
     })
 })
