@@ -52,7 +52,8 @@ router.route('/users').put((req, res) => {
         if (err) {
             res.send("Error updating user pick points");
         } else {
-            res.send("User pick points updated " + curPoints + ' + ' + req.body.points);
+            //res.send("User pick points updated " + curPoints + ' + ' + req.body.points);
+            res.send(dbConnect.collection("teampicks").findOne({user: req.body.user}))
         }
     })
 })
