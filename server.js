@@ -25,7 +25,8 @@ router.route('/users').post((req, res) => {
         email: req.body.email,
         country: req.body.country,
         state: req.body.state,
-        referral: req.body.referral
+        referral: req.body.referral,
+        points: 0
     }}
     dbConnect.collection("users").updateOne({user: req.body.user}, userDocument, {upsert: true}, (err, result) => {
         if (err) {
@@ -36,6 +37,25 @@ router.route('/users').post((req, res) => {
         }
     });   
 });
+
+
+//api endpoint to update a user's points based on their picks
+router.route('/teampicks').put((req, res) => {
+    const dbConnect = dbo.getDb()
+    const curPoints = dbConnect.collection("teampicks").find({user: req.body.user}).points
+    const updatePicks = {
+        $set: {
+            points: curPoints + req.body.points
+        }
+    }
+    dbConnect.collection("teampicks").updateOne({user: req.body.user}, updatePicks, {upsert: true}, (err, result) => {
+        if (err) {
+            res.send("Error updating user pick points");
+        } else {
+            res.send("User pick points updated");
+        }
+    })
+})
 
 //api endpoint to get all users
 router.route('/users').get((req, res) => {
