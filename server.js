@@ -49,6 +49,7 @@ router.route('/users').put((req, res) => {
     }
     dbConnect.collection("users").update({user: req.body.user}, incPoints, (err, result) => {
         if (err) {
+            console.log(err)
             res.send(err);
         } else {
             res.send("User pick points added: " + req.body.points);
