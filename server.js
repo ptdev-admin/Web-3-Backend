@@ -47,9 +47,8 @@ router.route('/users').put((req, res) => {
             points: req.body.points
         }
     }
-    dbConnect.collection("users").update({user: req.body.user}, incPoints, (err, result) => {
+    dbConnect.collection("users").updateOne({user: req.body.user}, incPoints, (err, result) => {
         if (err) {
-            console.log(err)
             res.send(err);
         } else {
             res.send("User pick points added: " + req.body.points);
@@ -78,7 +77,8 @@ router.route('/teampicks').put((req, res) => {
     const updatePicks = {
         $set: {
             user: req.body.user,
-            teampicks: req.body.teampicks
+            teampicks: req.body.teampicks,
+            time: req.body.time
         },
     }
     dbConnect.collection("teampicks").updateOne({user: req.body.user}, updatePicks, {upsert: true}, (err, result) => {
