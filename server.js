@@ -132,7 +132,7 @@ router.route('/chat-hth').get((req, res) => {
 //api endpoint to delete all chats head to head
 router.route('/chat-hth').delete((req, res) => {
     const dbConnect = dbo.getDb()
-	dbConnect.collection("hth-chat").remove({})
+	dbConnect.collection("chat-hth").remove({})
     res.send('deleted all')
 })
 
