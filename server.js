@@ -105,6 +105,39 @@ router.route('/teampicks').delete((req, res) => {
 
 
 
+//api endpoint to create a new chat message head to head
+router.route('/chat-hth').post((req, res) => {
+    const dbConnect = dbo.getDb();
+    const chatDocument = {
+        user: req.body.user,
+        msg: req.body.msg,
+        time: req.body.time
+    }
+    dbConnect.collection("chat-hth").insert(chatDocument, (err, result) => {
+        if (err) {
+            res.status(400).send("Error inserting chat msg")
+        } else {
+            console.log(`Added a new msg: ${userDocument.msg}`)
+            res.status(204).send("new msg added")
+        }
+    });   
+});
+
+//api endpoint to get all chats head to head
+router.route('/chat-hth').get((req, res) => {
+    const dbConnect = dbo.getDb();
+    dbConnect.collection("chat-hth").find({}).toArray().then(hthCol => res.send(hthCol))
+});
+
+//api endpoint to delete all chats head to head
+router.route('/hth').delete((req, res) => {
+    const dbConnect = dbo.getDb()
+	dbConnect.collection("hth-chat").remove({})
+    res.send('deleted all')
+})
+
+
+
 app.use(router);
 
 //global error handling
