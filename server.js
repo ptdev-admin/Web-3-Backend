@@ -111,7 +111,6 @@ router.route('/chat-hth').post((req, res) => {
     const chatDocument = {
         user: req.body.user,
         msg: req.body.msg,
-        time: req.body.time
     }
     dbConnect.collection("chat-hth").insert(chatDocument, (err, result) => {
         if (err) {
