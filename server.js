@@ -117,7 +117,7 @@ router.route('/chat-hth').post((req, res) => {
         if (err) {
             res.status(400).send("Error inserting chat msg")
         } else {
-            console.log(`Added a new msg: ${userDocument.msg}`)
+            console.log(`Added a new msg: ${chatDocument.msg}`)
             res.status(204).send("new msg added")
         }
     });   
@@ -130,7 +130,7 @@ router.route('/chat-hth').get((req, res) => {
 });
 
 //api endpoint to delete all chats head to head
-router.route('/hth').delete((req, res) => {
+router.route('/chat-hth').delete((req, res) => {
     const dbConnect = dbo.getDb()
 	dbConnect.collection("hth-chat").remove({})
     res.send('deleted all')
