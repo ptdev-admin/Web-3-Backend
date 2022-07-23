@@ -117,7 +117,7 @@ router.route('/chat-hth').post((req, res) => {
             res.status(400).send("Error inserting chat msg")
         } else {
             console.log(`Added a new msg: ${chatDocument.msg}`)
-            res.status(204).send("new msg added")
+            res.status(204).send("new msg added to chat")
         }
     });   
 });
