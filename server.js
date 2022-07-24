@@ -15,6 +15,8 @@ router.options('*', cors())
 
 
 
+///// USERS /////
+
 //api endpoint to create a new user with username and password
 router.route('/users').post((req, res) => {
     const dbConnect = dbo.getDb();
@@ -71,6 +73,8 @@ router.route('/users').delete((req, res) => {
 
 
 
+///// TEAM PICKS /////
+
 //api endpoint for team selected in head to head
 router.route('/teampicks').put((req, res) => {
     const dbConnect = dbo.getDb();
@@ -105,6 +109,8 @@ router.route('/teampicks').delete((req, res) => {
 
 
 
+///// HEAD TO HEAD CHAT /////
+
 //api endpoint to create a new chat message head to head
 router.route('/chat-hth').post((req, res) => {
     const dbConnect = dbo.getDb();
@@ -132,6 +138,142 @@ router.route('/chat-hth').get((req, res) => {
 router.route('/chat-hth').delete((req, res) => {
     const dbConnect = dbo.getDb()
 	dbConnect.collection("chat-hth").remove({})
+    res.send('deleted all')
+})
+
+
+
+///// STAT VS STAT CHAT /////
+
+//api endpoint to create a new chat message stat vs stat
+router.route('/chat-svs').post((req, res) => {
+    const dbConnect = dbo.getDb();
+    const chatDocument = {
+        user: req.body.user,
+        msg: req.body.msg,
+    }
+    dbConnect.collection("chat-svs").insert(chatDocument, (err, result) => {
+        if (err) {
+            res.status(400).send("Error inserting chat msg")
+        } else {
+            console.log(`Added a new msg: ${chatDocument.msg}`)
+            res.status(204).send("new msg added to chat")
+        }
+    });   
+});
+
+//api endpoint to get all chats stat vs stat
+router.route('/chat-svs').get((req, res) => {
+    const dbConnect = dbo.getDb();
+    dbConnect.collection("chat-svs").find({}).toArray().then(hthCol => res.send(hthCol))
+});
+
+//api endpoint to delete all chats stat vs stat
+router.route('/chat-svs').delete((req, res) => {
+    const dbConnect = dbo.getDb()
+	dbConnect.collection("chat-svs").remove({})
+    res.send('deleted all')
+})
+
+
+
+///// LEADERBOARD CHAT /////
+
+//api endpoint to create a new chat message leaderboard
+router.route('/chat-leader').post((req, res) => {
+    const dbConnect = dbo.getDb();
+    const chatDocument = {
+        user: req.body.user,
+        msg: req.body.msg,
+    }
+    dbConnect.collection("chat-leader").insert(chatDocument, (err, result) => {
+        if (err) {
+            res.status(400).send("Error inserting chat msg")
+        } else {
+            console.log(`Added a new msg: ${chatDocument.msg}`)
+            res.status(204).send("new msg added to chat")
+        }
+    });   
+});
+
+//api endpoint to get all chats leaderboard
+router.route('/chat-leader').get((req, res) => {
+    const dbConnect = dbo.getDb();
+    dbConnect.collection("chat-leader").find({}).toArray().then(hthCol => res.send(hthCol))
+});
+
+//api endpoint to delete all chats leaderboard
+router.route('/chat-leader').delete((req, res) => {
+    const dbConnect = dbo.getDb()
+	dbConnect.collection("chat-leader").remove({})
+    res.send('deleted all')
+})
+
+
+
+///// PLAYER PAGE CHAT /////
+
+//api endpoint to create a new chat message player page
+router.route('/chat-player').post((req, res) => {
+    const dbConnect = dbo.getDb();
+    const chatDocument = {
+        user: req.body.user,
+        msg: req.body.msg,
+    }
+    dbConnect.collection("chat-player").insert(chatDocument, (err, result) => {
+        if (err) {
+            res.status(400).send("Error inserting chat msg")
+        } else {
+            console.log(`Added a new msg: ${chatDocument.msg}`)
+            res.status(204).send("new msg added to chat")
+        }
+    });   
+});
+
+//api endpoint to get all chats player page
+router.route('/chat-player').get((req, res) => {
+    const dbConnect = dbo.getDb();
+    dbConnect.collection("chat-player").find({}).toArray().then(hthCol => res.send(hthCol))
+});
+
+//api endpoint to delete all chats player page
+router.route('/chat-player').delete((req, res) => {
+    const dbConnect = dbo.getDb()
+	dbConnect.collection("chat-player").remove({})
+    res.send('deleted all')
+})
+
+
+
+///// TEAM PAGE CHAT /////
+
+//api endpoint to create a new chat message team page
+router.route('/chat-team').post((req, res) => {
+    const dbConnect = dbo.getDb();
+    const chatDocument = {
+        user: req.body.user,
+        msg: req.body.msg,
+    }
+    dbConnect.collection("chat-team").insert(chatDocument, (err, result) => {
+        if (err) {
+            res.status(400).send("Error inserting chat msg")
+        } else {
+            console.log(`Added a new msg: ${chatDocument.msg}`)
+            res.status(204).send("new msg added to chat")
+        }
+    });   
+});
+
+//api endpoint to get all chats team page
+router.route('/chat-team').get((req, res) => {
+    const dbConnect = dbo.getDb();
+    dbConnect.collection("chat-team").find({}).toArray().then(hthCol => res.send(hthCol))
+});
+
+//api endpoint to delete all chats team page
+router.route('/chat-team').delete((req, res) => {
+    const dbConnect = dbo.getDb()
+	dbConnect.collection("chat-team").remove({})
     res.send('deleted all')
 })
 
