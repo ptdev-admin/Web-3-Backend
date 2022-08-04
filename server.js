@@ -40,7 +40,6 @@ router.route('/users').post((req, res) => {
     });   
 });
 
-
 //api endpoint to update a user's points based on their picks
 router.route('/users').put((req, res) => {
     const dbConnect = dbo.getDb()
@@ -104,6 +103,41 @@ router.route('/teampicks').get((req, res) => {
 router.route('/teampicks').delete((req, res) => {
     const dbConnect = dbo.getDb()
 	dbConnect.collection("teampicks").remove({})
+    res.send('deleted all')
+})
+
+
+
+///// PLAYER IDS /////
+
+//api endpoint for storing player ids
+router.route('/player-ids').put((req, res) => {
+    const dbConnect = dbo.getDb();
+    const updatePicks = {
+        $set: {
+            id: 'official',
+            ids: req.body.ids
+        },
+    }
+    dbConnect.collection("player-ids").updateOne({id: 'official'}, updatePicks, {upsert: true}, (err, result) => {
+        if (err) {
+            res.send("Error updating player ids");
+        } else {
+            res.send("Player ids added");
+        }
+    })
+})
+
+//api endpoint to get all team picks
+router.route('/player-ids').get((req, res) => {
+    const dbConnect = dbo.getDb();
+    dbConnect.collection("player-ids").find({}).toArray().then(pickCol => res.send(pickCol))
+});
+
+//api endpoint to delete all pick data
+router.route('/player-ids').delete((req, res) => {
+    const dbConnect = dbo.getDb()
+	dbConnect.collection("player-ids").remove({})
     res.send('deleted all')
 })
 
