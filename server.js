@@ -128,16 +128,51 @@ router.route('/player-ids').put((req, res) => {
     })
 })
 
-//api endpoint to get all team picks
+//api endpoint to get all player ids
 router.route('/player-ids').get((req, res) => {
     const dbConnect = dbo.getDb();
     dbConnect.collection("player-ids").find({}).toArray().then(pickCol => res.send(pickCol))
 });
 
-//api endpoint to delete all pick data
+//api endpoint to delete all player ids
 router.route('/player-ids').delete((req, res) => {
     const dbConnect = dbo.getDb()
 	dbConnect.collection("player-ids").remove({})
+    res.send('deleted all')
+})
+
+
+
+///// PLAYER NAMES TO IDS /////
+
+//api endpoint for storing player ids with their names
+router.route('/player-name-ids').put((req, res) => {
+    const dbConnect = dbo.getDb();
+    const updatePicks = {
+        $set: {
+            id: 'official',
+            ids: req.body.ids
+        },
+    }
+    dbConnect.collection("player-name-ids").updateOne({id: 'official'}, updatePicks, {upsert: true}, (err, result) => {
+        if (err) {
+            res.send("Error updating player ids and names");
+        } else {
+            res.send("Player ids with names added");
+        }
+    })
+})
+
+//api endpoint to get all player ids with their names
+router.route('/player-name-ids').get((req, res) => {
+    const dbConnect = dbo.getDb();
+    dbConnect.collection("player-name-ids").find({}).toArray().then(pickCol => res.send(pickCol))
+});
+
+//api endpoint to delete all player ids with their names
+router.route('/player-name-ids').delete((req, res) => {
+    const dbConnect = dbo.getDb()
+	dbConnect.collection("player-name-ids").remove({})
     res.send('deleted all')
 })
 
