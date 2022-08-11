@@ -178,6 +178,41 @@ router.route('/rosters').delete((req, res) => {
 
 
 
+///// STANDINGS /////
+
+//api endpoint for storing standings
+router.route('/standings').put((req, res) => {
+    const dbConnect = dbo.getDb();
+    const updateStand = {
+        $set: {
+            id: 'official',
+            standings: req.body.standings
+        },
+    }
+    dbConnect.collection("standings").updateOne({id: 'official'}, updateStand, {upsert: true}, (err, result) => {
+        if (err) {
+            res.send("Error updating standings");
+        } else {
+            res.send("Standings added");
+        }
+    })
+})
+
+//api endpoint to get all standings
+router.route('/standings').get((req, res) => {
+    const dbConnect = dbo.getDb();
+    dbConnect.collection("standings").find({}).toArray().then(pickCol => res.send(pickCol))
+});
+
+//api endpoint to delete all standings
+router.route('/standings').delete((req, res) => {
+    const dbConnect = dbo.getDb()
+	dbConnect.collection("standings").remove({})
+    res.send('deleted all')
+})
+
+
+
 ///// HEAD TO HEAD CHAT /////
 
 //api endpoint to create a new chat message head to head
